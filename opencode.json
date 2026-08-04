@@ -1,10 +1,10 @@
 {
-  "model": "volcengine-plan/deepseek-v4-flash",
+  "model": "deepseek/deepseek-v4-flash",
   "provider": {
-    "volcengine-plan": {
-      "name": "Volcano Engine (Coding Plan)",
-      "baseURL": "https://ark.cn-beijing.volces.com/api/coding/v3",
-      "apiKey": "你的apiKey",
+    "deepseek": {
+      "name": "Deepseek",
+      "baseURL": "https://api.deepseek.com",
+      "apiKey": "sk-fff33ed17b8549ff8be5304f57b497aa",
       "models": {
         "deepseek-v4-flash": {},
         "glm-5.2": {},
