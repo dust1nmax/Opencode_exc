@@ -8,7 +8,12 @@ export async function loadConfig() {
     return { baseURL: provider.baseURL, apiKey: provider.apiKey, modelID }
 }
 
-//实现发送请求
+//实现发送请求1
+
+type ChatResponse = {
+    choices: { message: { content: string } }[]
+}
+
 export async function chat(
     messages: Message[],
     config: { baseURL: string; apiKey: string; modelID: string },
@@ -25,9 +30,13 @@ export async function chat(
         }),
     })
 
-    const data = await response.json()
     if (!response.ok) {
-        throw new Error(`API error ${response.status}: ${JSON.stringify(data)}`)
+        throw new Error(`API error ${response.status}: ${await response.text()}`)
     }
-    return data.choices[0].message.content
+    const data = (await response.json()) as ChatResponse
+    const content = data.choices[0]?.message.content
+    if (content === undefined) {
+        throw new Error("API returned no content")
+    }
+    return content
 }
