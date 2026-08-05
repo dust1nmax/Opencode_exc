@@ -1,5 +1,6 @@
 import type { Message } from "./type";
-import { loadConfig, chat } from "./llm";
+import { loadConfig, chat, chatStream } from "./llm";
+import { test } from "bun:test";
 
 const config = await loadConfig()
 
@@ -21,8 +22,14 @@ while (true) {
     if (!input) break
 
     messages.push({ role: "user", content: input })
-    const reply = await chat(messages, config)
+    //const reply = await chat(messages, config)
+    process.stdout.write("AI: ")
+    const reply = await chatStream(messages, config, (text) => {
+        process.stdout.write(text)
+    })
+    console.log() //回复结束 换行
+    
     messages.push({ role: "assistant", content: reply })
 
-    console.log("AI:", reply)
+    //console.log("AI:", reply)
 }
